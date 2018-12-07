@@ -112,6 +112,23 @@ class Currency < ActiveRecord::Base
       hot:      coin? ? balance : nil }
   end
 
+  class << self
+    def nested_attr(*names)
+      names.each do |name|
+        name_string = name.to_s
+        define_method(name)              { options[name_string] }
+        define_method(name_string + '?') { options[name_string].present? }
+        define_method(name_string + '=') { |value| options[name_string] = value }
+        define_method(name_string + '!') { options.fetch!(name_string) }
+      end
+    end
+  end
+
+  nested_attr \
+    :erc20_contract_address,
+    :gas_limit,
+    :gas_price
+
   def disabled?
     !enabled
   end
