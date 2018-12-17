@@ -29,7 +29,7 @@ module WalletService
     end
 
     def deposit_collection_fees(deposit, options = {})
-      currency_options = deposit.currency.options
+      currency_options = deposit.currency.options.symbolize_keys
 
       # Calculate fees paid in gas for deposit collection of ERC20.
       # Use currency gas_limit and gas_price options if they are present.
@@ -70,7 +70,7 @@ module WalletService
     end
 
     def collect_eth_deposit!(deposit, options = {})
-      currency_options = deposit.currency.options
+      currency_options = deposit.currency.options.symbolize_keys
 
       # ETH tx fees configuration:
       #   1. Defined in DEFAULT_ETH_FEE.
@@ -95,7 +95,7 @@ module WalletService
     end
 
     def collect_erc20_deposit!(deposit, options = {})
-      currency_options = deposit.currency.options
+      currency_options = deposit.currency.options.symbolize_keys
 
       # ERC20 tx fees configuration:
       #   1. Defined in DEFAULT_ERC20_FEE.
